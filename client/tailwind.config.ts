@@ -26,12 +26,14 @@ const shadeMapping = {
   "900": "50",
 };
 
-const generateThemeObject = (colors: any, mapping: any, invert = false) => {
-  const theme: any = {};
+const generateThemeObject = (colors: typeof import("tailwindcss/colors"), mapping: Record<string, string>, invert = false) => {
+  const theme: Record<string, Record<string, string>> = {};
   baseColors.forEach((color) => {
     theme[color] = {};
-    Object.entries(mapping).forEach(([key, value]: any) => {
+    Object.entries(mapping).forEach(([key, value]) => {
       const shadeKey = invert ? value : key;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //@ts-ignore
       theme[color][key] = colors[color][shadeKey];
     });
   });
